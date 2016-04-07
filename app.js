@@ -12,12 +12,7 @@ connection.connect(function(err){
 		return;
 	}
 });
-urlParams = {
-							"format":"json",
-							"photo-host":"public",
-							"key":"516927271221e607c3112756985874",
-							"page":1000
-						}
+
 request.get("https://api.meetup.com/activity?format=json&photo-host=public&key=516927271221e607c3112756985874&page=1000",function (supplierError, supplierResponse, supplierBody) {
 	if (!supplierError) {
 		feedData = JSON.parse(supplierBody)
@@ -29,7 +24,9 @@ request.get("https://api.meetup.com/activity?format=json&photo-host=public&key=5
 		}
 	}
 })
+
 var insertedData = 0
+
 function getData(member_id){
 	request.get("https://api.meetup.com/2/events?format=json&photo-host=public&key=516927271221e607c3112756985874&page=1000000&order=time&offset=0&format=json&limited_events=False&&member_id="+member_id,function (eventError, eventResponse, eventBody) {
 		if (!eventError) {
@@ -54,7 +51,7 @@ function getData(member_id){
 						event.duration,
 						event.name,
 						event.updated,
-						event.group,
+						JSON.stringify(event.group),
 						event.status
 					]
 					eventsArray.push(eventArray)
